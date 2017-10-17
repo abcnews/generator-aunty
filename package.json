@@ -1,5 +1,5 @@
 {
-  "name": "generator-aunty",
+  "name": "@abcnews/generator-aunty",
   "version": "1.0.0",
   "description": "Generate things for Aunty projects",
   "main": "index.js",
