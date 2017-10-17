@@ -1,0 +1,27 @@
+{
+  "name": "generator-aunty",
+  "version": "1.0.0",
+  "description": "Generate things for Aunty projects",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "files": ["generators"],
+  "keywords": ["yeoman-generator"],
+  "author": "Nathan Hoad",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^2.1.0",
+    "execa": "^0.8.0",
+    "fs-extra": "^4.0.2",
+    "guess-root-path": "^1.0.0",
+    "i": "^0.3.6",
+    "ora": "^1.3.0",
+    "prettier": "^1.7.4",
+    "requireg": "^0.1.7",
+    "yeoman-generator": "^2.0.1"
+  },
+  "devDependencies": {
+    "jest": "^21.2.1"
+  }
+}
