@@ -13,6 +13,9 @@ module.exports = class extends Generator {
     super(args, opts);
 
     this.argument('name', { required: false });
+
+    this.dependencies = [];
+    this.devDependencies = ['jest', 'babel-jest', 'imitation'];
   }
 
   initializing() {
@@ -50,6 +53,15 @@ module.exports = class extends Generator {
       });
     }
 
+    if (!this.options.d3) {
+      prompts.push({
+        type: 'confirm',
+        name: 'd3',
+        message: 'Is this a D3 component?',
+        default: false
+      });
+    }
+
     if (prompts.length > 0) {
       const answers = await this.prompt(prompts);
       this.options = Object.assign({}, this.options, answers);
@@ -67,8 +79,14 @@ module.exports = class extends Generator {
     };
 
     // Copy the actual component
+    let component = 'component';
+    if (this.options.d3) {
+      component = 'component-with-d3';
+      this.dependencies = this.dependencies.concat('d3-selection');
+    }
+
     this.fs.copyTpl(
-      `${templatePath}/component.js`,
+      `${templatePath}/${component}.js`,
       this.destinationPath(`src/components/${this.options.name}.js`),
       context
     );
@@ -79,24 +97,21 @@ module.exports = class extends Generator {
     );
 
     // Make sure we have a .babelrc
-    this.fs.copyTpl(`${templatePath}/.babelrc`, this.destinationPath('.babelrc'));
+    this.fs.copyTpl(`${templatePath}/_.babelrc`, this.destinationPath('.babelrc'));
 
     // Copy test over
     this.fs.copyTpl(
-      `${templatePath}/component.test.js`,
+      `${templatePath}/${component}.test.js`,
       this.destinationPath(`src/components/__tests__/${this.options.name}.test.js`),
       context
     );
   }
 
   async install() {
-    let dependencies = [];
-    let devDependencies = ['jest', 'babel-jest', 'imitation'];
-
     switch (this.options.template) {
       case 'preact':
-        dependencies = ['preact', 'preact-compat'];
-        devDependencies = devDependencies.concat([
+        this.dependencies = this.dependencies.concat(['preact', 'preact-compat']);
+        this.devDependencies = this.devDependencies.concat([
           'html-looks-like',
           'preact-render-to-string',
           'babel-plugin-transform-react-jsx',
@@ -105,8 +120,8 @@ module.exports = class extends Generator {
         break;
 
       case 'react':
-        dependencies = ['react', 'react-dom'];
-        devDependencies = devDependencies.concat(['react-test-renderer', 'babel-preset-react']);
+        this.dependencies = this.dependencies.concat(['react', 'react-dom']);
+        this.devDependencies = this.devDependencies.concat(['react-test-renderer', 'babel-preset-react']);
         break;
 
       default:
@@ -114,8 +129,8 @@ module.exports = class extends Generator {
       // Nothing
     }
 
-    await installDependencies(devDependencies, '--save-dev', this.log);
-    await installDependencies(dependencies, '--save', this.log);
+    await installDependencies(this.devDependencies, '--save-dev', this.log);
+    await installDependencies(this.dependencies, '--save', this.log);
   }
 
   end() {

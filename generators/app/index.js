@@ -74,7 +74,12 @@ module.exports = class extends Generator {
     paths.forEach(file => {
       this.fs.copyTpl(
         file,
-        this.destinationPath(file.replace(`${commonPath}/`, '').replace(`${typePath}/`, '')),
+        this.destinationPath(
+          file
+            .replace(`${commonPath}/`, '')
+            .replace(`${typePath}/`, '')
+            .replace('_.', '.')
+        ),
         context
       );
     });

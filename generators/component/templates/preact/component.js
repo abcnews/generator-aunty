@@ -1,4 +1,5 @@
 const { h, Component } = require('preact');
+
 const styles = require('./<%= className %>.scss');
 
 class <%= className %> extends Component {
