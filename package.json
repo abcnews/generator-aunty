@@ -1,13 +1,18 @@
 {
   "name": "@abcnews/generator-aunty",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Generate things for Aunty projects",
   "main": "generators/app/index.js",
   "scripts": {
     "test": "jest"
   },
-  "files": ["generators", "helpers.js"],
-  "keywords": ["yeoman-generator"],
+  "files": [
+    "generators",
+    "helpers.js"
+  ],
+  "keywords": [
+    "yeoman-generator"
+  ],
   "author": "Nathan Hoad",
   "license": "ISC",
   "dependencies": {
@@ -25,6 +30,9 @@
     "jest": "^21.2.1"
   },
   "jest": {
-    "testPathIgnorePatterns": ["/templates/", "/node_modules/"]
+    "testPathIgnorePatterns": [
+      "/templates/",
+      "/node_modules/"
+    ]
   }
 }
