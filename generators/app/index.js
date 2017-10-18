@@ -3,6 +3,7 @@ const FS = require('fs-extra');
 const guessRootPath = require('guess-root-path');
 const Chalk = require('chalk');
 const requireg = require('requireg');
+const Path = require('path');
 const { installDependencies, getAllPaths, SPINNER } = require('../../helpers');
 
 module.exports = class extends Generator {
@@ -14,6 +15,10 @@ module.exports = class extends Generator {
 
   async prompting() {
     let prompts = [];
+
+    if (this.options.here) {
+      this.options.name = Path.basename(process.cwd());
+    }
 
     if (!this.options.name) {
       prompts.push({
@@ -46,7 +51,12 @@ module.exports = class extends Generator {
       .toLowerCase()
       .replace(/\s/, '-')
       .replace(/[^0-9a-z\-\_]/, '');
-    this.options.path = process.cwd() + '/' + this.options.projectSlug;
+
+    if (this.options.here) {
+      this.options.path = process.cwd();
+    } else {
+      this.options.path = process.cwd() + '/' + this.options.projectSlug;
+    }
   }
 
   async configuring() {
@@ -120,6 +130,8 @@ module.exports = class extends Generator {
   }
 
   end() {
-    this.log('\n 👍', Chalk.bold(this.options.name), 'created in', Chalk.bold('./' + this.options.projectSlug), '\n');
+    const where = this.options.here ? 'the current directory' : `./${this.options.projectSlug}`;
+
+    this.log('\n 👍', Chalk.bold(this.options.name), 'created in', Chalk.bold(where), '\n');
   }
 };
