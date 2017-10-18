@@ -3,7 +3,6 @@ const root = document.querySelector(`[data-${PROJECT_NAME}-root]`);
 
 function init() {
   const App = require('./components/App');
-
   root.appendChild(new App({ projectName: PROJECT_NAME }).el);
 }
 
@@ -17,7 +16,6 @@ if (module.hot) {
       init();
     } catch (err) {
       const ErrorBox = require('./components/ErrorBox');
-
       root.appendChild(new ErrorBox({ error: err }).el);
     }
   });
