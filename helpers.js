@@ -34,13 +34,20 @@ const installDependencies = async (dependencies, args, log) => {
 
   if (dependencies.length === 0) return;
 
-  args = ['install', '--silent', '--no-progress', '--prefer-local'].concat(dependencies).concat(args);
-
   let spinner = ora(SPINNER).start();
-  spinner.text = Chalk.gray('installing ' + dependencies.join(', '));
+  spinner.text = Chalk.gray(
+    'installing ' +
+      dependencies.length +
+      `${args.includes('--save-dev') ? ' development ' : ' '}dependenc${dependencies.length == 1 ? 'y' : 'ies'}`
+  );
+
+  args = ['install', '--silent', '--no-progress', '--prefer-local'].concat(dependencies).concat(args);
   await execa('npm', args);
+
   spinner.stop();
-  log(Chalk.yellow('      npm'), dependencies.join(', '));
+  dependencies.forEach(d => {
+    log(Chalk.yellow('      npm'), d);
+  });
 };
 
 /**
@@ -108,7 +115,7 @@ const SPINNER = {
       '⣤⠃⠀',
       '⣦⠂⠀',
       '⣧⠀⠀'
-    ]
+    ].map(f => '     ' + f + ' ')
   }
 };
 
