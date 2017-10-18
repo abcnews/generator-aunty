@@ -35,6 +35,15 @@ module.exports = class extends Generator {
       process.chdir(directory);
       this.destinationRoot(directory);
       this.config.save();
+
+      // Try and guess what template is being used from the aunty config
+      try {
+        const packageJson = require(directory + '/package.json');
+        const template = packageJson.aunty.replace('-app', '');
+        this.config.set('template', template);
+      } catch (ex) {
+        // Couldn't detect a thing
+      }
     }
   }
 
