@@ -14,8 +14,19 @@ module.exports = class extends Generator {
 
     this.argument('name', { required: false });
 
+    this.option('template', { description: 'Type of project (eg. basic, preact, react)' });
+    this.option('d3', { description: 'This component will use D3' });
+
     this.dependencies = [];
     this.devDependencies = ['jest', 'babel-jest', 'imitation'];
+  }
+
+  usage() {
+    if (this.options.aunty) {
+      return 'aunty generate component [options] [<name>]';
+    } else {
+      return super.usage();
+    }
   }
 
   initializing() {

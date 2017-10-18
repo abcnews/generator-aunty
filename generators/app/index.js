@@ -11,6 +11,16 @@ module.exports = class extends Generator {
     super(args, opts);
 
     this.argument('name', { required: false });
+    this.option('here', { description: 'Initialize project into current directory' });
+    this.option('template', { description: 'Type of project (eg. basic, preact, react)' });
+  }
+
+  usage() {
+    if (this.options.aunty) {
+      return 'aunty new [options] [<name>]';
+    } else {
+      return super.usage();
+    }
   }
 
   async prompting() {
