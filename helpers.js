@@ -51,6 +51,19 @@ const installDependencies = async (dependencies, args, log) => {
 };
 
 /**
+ * Look up the current master version of a thing
+ */
+const getGithubVersion = async repo => {
+  let spinner = ora(SPINNER).start();
+  spinner.color = 'white';
+  spinner.text = Chalk.gray('Fetching latest version of ' + repo);
+  const p = await fetch(`https://raw.githubusercontent.com/${repo}/master/package.json`).then(r => r.json());
+  spinner.stop();
+
+  return p.version;
+};
+
+/**
  * Get an array of all paths in a directory and its subdirectorys
  * @param {(string|Array<strong>)} basePath A directory to start in
  * @returns {Array<string>} The list of paths
@@ -119,4 +132,4 @@ const SPINNER = {
   }
 };
 
-module.exports = { installDependencies, getAllPaths, SPINNER };
+module.exports = { installDependencies, getGithubVersion, getAllPaths, SPINNER };

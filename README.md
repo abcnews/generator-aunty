@@ -8,6 +8,8 @@ Generate things for [Aunty](https://www.npmjs.com/package/@abcnews/aunty) projec
 
 `yo aunty:component` - Generate a component (and tests) from within an Aunty project
 
+`yo aunty:preview` - Generate a preview for both mobile and desktop.
+
 
 ## Authors
 
