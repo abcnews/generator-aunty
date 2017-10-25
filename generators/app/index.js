@@ -114,7 +114,7 @@ module.exports = class extends Generator {
     }
 
     let dependencies = [];
-    let devDependencies = [`@abcnews/aunty@${auntyVersion}`, 'jest', 'babel-jest', 'imitation'];
+    let devDependencies = [`@abcnews/aunty@${auntyVersion}`, 'jest'];
 
     switch (this.options.template) {
       case 'preact':

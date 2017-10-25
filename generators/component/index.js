@@ -18,7 +18,7 @@ module.exports = class extends Generator {
     this.option('d3', { description: 'This component will use D3' });
 
     this.dependencies = [];
-    this.devDependencies = ['jest', 'babel-jest', 'imitation'];
+    this.devDependencies = ['jest'];
   }
 
   usage() {
@@ -115,9 +115,6 @@ module.exports = class extends Generator {
       this.destinationPath(`src/components/${this.options.name}.scss`),
       context
     );
-
-    // Make sure we have a .babelrc
-    this.fs.copyTpl(`${templatePath}/_.babelrc`, this.destinationPath('.babelrc'));
 
     // Copy test over
     this.fs.copyTpl(
