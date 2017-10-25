@@ -12,7 +12,7 @@
   },
   "jest": {
     "transform": {
-      ".*": "<rootDir>/node_modules/@abcnews/aunty/jest"
+      ".*": "<rootDir>/node_modules/@abcnews/aunty/src/utils/jest"
     }
   }
 }
