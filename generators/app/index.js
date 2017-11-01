@@ -106,7 +106,7 @@ module.exports = class extends Generator {
   }
 
   async install() {
-    let auntyVersion = '5.6.0';
+    let auntyVersion = '7.0.1';
     try {
       auntyVersion = requireg('@abcnews/aunty/package.json').version;
     } catch (ex) {
