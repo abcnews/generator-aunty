@@ -59,8 +59,8 @@ module.exports = class extends Generator {
 
     this.options.projectSlug = this.options.name
       .toLowerCase()
-      .replace(/\s/, '-')
-      .replace(/[^0-9a-z\-\_]/, '');
+      .replace(/\s/g, '-')
+      .replace(/[^0-9a-z\-\_]/g, '');
 
     if (this.options.here) {
       this.options.path = process.cwd();
@@ -122,17 +122,17 @@ module.exports = class extends Generator {
           'preact-render-to-string',
           'html-looks-like',
           'babel-plugin-transform-react-jsx',
-          'babel-preset-es2015'
+          'babel-preset-env'
         ]);
         dependencies = ['preact', 'preact-compat'];
         break;
       case 'react':
-        devDependencies = devDependencies.concat(['react-test-renderer', 'babel-preset-es2015', 'babel-preset-react']);
+        devDependencies = devDependencies.concat(['react-test-renderer', 'babel-preset-env', 'babel-preset-react']);
         dependencies = ['react', 'react-dom'];
         break;
       case 'basic':
       default:
-      // Nothing
+        devDependencies = devDependencies.concat(['babel-preset-env']);
     }
 
     await installDependencies(devDependencies, '--save-dev', this.log);

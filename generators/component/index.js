@@ -132,18 +132,22 @@ module.exports = class extends Generator {
           'html-looks-like',
           'preact-render-to-string',
           'babel-plugin-transform-react-jsx',
-          'babel-preset-es2015'
+          'babel-preset-env'
         ]);
         break;
 
       case 'react':
         this.dependencies = this.dependencies.concat(['react', 'react-dom']);
-        this.devDependencies = this.devDependencies.concat(['react-test-renderer', 'babel-preset-react']);
+        this.devDependencies = this.devDependencies.concat([
+          'react-test-renderer',
+          'babel-preset-react',
+          'babel-preset-env'
+        ]);
         break;
 
       default:
       case 'basic':
-      // Nothing
+        this.devDependencies = this.devDependencies.concat(['babel-preset-env']);
     }
 
     await installDependencies(this.devDependencies, '--save-dev', this.log);
