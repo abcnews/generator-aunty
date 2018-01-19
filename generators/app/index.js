@@ -4,7 +4,8 @@ const guessRootPath = require('guess-root-path');
 const Chalk = require('chalk');
 const requireg = require('requireg');
 const Path = require('path');
-const { installDependencies, getAllPaths, SPINNER } = require('../../helpers');
+const getAllPaths = require('get-all-paths');
+const { installDependencies, SPINNER } = require('../../helpers');
 
 module.exports = class extends Generator {
   constructor(args, opts) {

@@ -39,10 +39,8 @@ class <%= className %> extends Component {
    * @param {object} props The latest props that were given to this component
    */
   initGraph(props) {
-    if (!this.wrapper) return;
-
     this.svg = d3
-      .select(this.wrapper)
+      .select(this.base)
       .append('svg')
       .attr('width', 400)
       .attr('height', 300);
@@ -60,17 +58,15 @@ class <%= className %> extends Component {
   }
 
   /**
-   * Update the graph. It is important to only update this component through normal D3 methods.
+   * Using the latests props, update any values in the graph.
    * @param {object} props The latest props given to this component
    */
   updateGraph(props) {
-    if (!this.wrapper) return;
-
     // TODO: Use D3 to update the graph
   }
 
   render() {
-    return <div className={styles.wrapper} ref={el => (this.wrapper = el)} />;
+    return <div className={styles.wrapper} />;
   }
 }
 
