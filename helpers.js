@@ -96,4 +96,4 @@ const SPINNER = {
   }
 };
 
-module.exports = { installDependencies, getGithubVersion, getAllPaths, SPINNER };
+module.exports = { installDependencies, getGithubVersion, SPINNER };
