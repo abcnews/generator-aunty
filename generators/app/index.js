@@ -48,7 +48,8 @@ module.exports = class extends Generator {
         choices: [
           { name: 'Preact', value: 'preact' },
           { name: 'Basic', value: 'basic' },
-          { name: 'React', value: 'react' }
+          { name: 'React', value: 'react' },
+          { name: 'Vue', value: 'vue' }
         ]
       });
     }
