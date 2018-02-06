@@ -132,6 +132,10 @@ module.exports = class extends Generator {
         devDependencies = devDependencies.concat(['react-test-renderer', 'babel-preset-env', 'babel-preset-react']);
         dependencies = ['react', 'react-dom'];
         break;
+      case 'vue':
+        devDependencies = devDependencies.concat(['vue-loader', 'vue-template-compiler']);
+        dependencies = ['vue'];
+        break;
       case 'basic':
       default:
         devDependencies = devDependencies.concat(['babel-preset-env']);
