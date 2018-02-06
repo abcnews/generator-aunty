@@ -18,7 +18,7 @@ export default {
 };
 </script>
 
-<style src="./App.scss" scoped></style>
+<style src="./App.scss" lang="scss" scoped></style>
 
 <style lang="scss" scoped>
 // Component styles here
