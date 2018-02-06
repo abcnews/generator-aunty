@@ -49,7 +49,7 @@ module.exports = class extends Generator {
           { name: 'Preact', value: 'preact' },
           { name: 'Basic', value: 'basic' },
           { name: 'React', value: 'react' },
-          { name: 'Vue!!', value: 'vue' }
+          { name: 'Vue', value: 'vue' }
         ]
       });
     }
