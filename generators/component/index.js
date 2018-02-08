@@ -108,11 +108,24 @@ module.exports = class extends Generator {
       this.dependencies = this.dependencies.concat('d3-selection');
     }
 
-    this.fs.copyTpl(
-      `${templatePath}/${component}.vue`,
-      this.destinationPath(`src/components/${this.options.name}.vue`),
-      context
-    );
+    if (this.options.name === 'vue') {
+      this.fs.copyTpl(
+        `${templatePath}/${component}.vue`,
+        this.destinationPath(`src/components/${this.options.name}.vue`),
+        context
+      );
+    } else {
+      this.fs.copyTpl(
+        `${templatePath}/${component}.js`,
+        this.destinationPath(`src/components/${this.options.name}.js`),
+        context
+      );
+      this.fs.copyTpl(
+        `${templatePath}/component.scss`,
+        this.destinationPath(`src/components/${this.options.name}.scss`),
+        context
+      );
+    }
 
     // Copy test over
     this.fs.copyTpl(
