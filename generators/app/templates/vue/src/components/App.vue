@@ -9,10 +9,10 @@
 import worm from "./worm.svg";
 export default {
   name: "App",
+  props: ["projectName"],
   data() {
     return {
-      worm: worm,
-      projectName: "<%= projectSlug %>"
+      worm: worm
     };
   }
 };
