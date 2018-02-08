@@ -133,7 +133,7 @@ module.exports = class extends Generator {
         dependencies = ['react', 'react-dom'];
         break;
       case 'vue':
-        devDependencies = devDependencies.concat(['vue-loader', 'vue-template-compiler']);
+        devDependencies = devDependencies.concat(['vue-loader', 'vue-template-compiler', 'vue-server-renderer']);
         dependencies = ['vue'];
         break;
       case 'basic':
