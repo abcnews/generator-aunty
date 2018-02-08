@@ -14,7 +14,9 @@ module.exports = class extends Generator {
 
     this.argument('name', { required: false });
 
-    this.option('template', { description: 'Type of project (eg. basic, preact, react)' });
+    this.option('template', {
+      description: 'Type of project (eg. basic, preact, react)'
+    });
     this.option('d3', { description: 'This component will use D3' });
 
     this.dependencies = [];
@@ -59,7 +61,8 @@ module.exports = class extends Generator {
         choices: [
           { name: 'Preact', value: 'preact' },
           { name: 'Basic', value: 'basic' },
-          { name: 'React', value: 'react' }
+          { name: 'React', value: 'react' },
+          { name: 'Vue', value: 'vue' }
         ]
       });
     }
@@ -106,20 +109,17 @@ module.exports = class extends Generator {
     }
 
     this.fs.copyTpl(
-      `${templatePath}/${component}.js`,
-      this.destinationPath(`src/components/${this.options.name}.js`),
-      context
-    );
-    this.fs.copyTpl(
-      `${templatePath}/component.scss`,
-      this.destinationPath(`src/components/${this.options.name}.scss`),
+      `${templatePath}/${component}.vue`,
+      this.destinationPath(`src/components/${this.options.name}.vue`),
       context
     );
 
     // Copy test over
     this.fs.copyTpl(
       `${templatePath}/${component}.test.js`,
-      this.destinationPath(`src/components/__tests__/${this.options.name}.test.js`),
+      this.destinationPath(
+        `src/components/__tests__/${this.options.name}.test.js`
+      ),
       context
     );
   }
@@ -127,7 +127,10 @@ module.exports = class extends Generator {
   async install() {
     switch (this.options.template) {
       case 'preact':
-        this.dependencies = this.dependencies.concat(['preact', 'preact-compat']);
+        this.dependencies = this.dependencies.concat([
+          'preact',
+          'preact-compat'
+        ]);
         this.devDependencies = this.devDependencies.concat([
           'html-looks-like',
           'preact-render-to-string',
@@ -145,9 +148,20 @@ module.exports = class extends Generator {
         ]);
         break;
 
+      case 'vue':
+        this.dependencies = this.dependencies.concat(['vue']);
+        this.devDependencies = this.devDependencies.concat([
+          'vue-loader',
+          'vue-template-compiler',
+          'vue-server-renderer'
+        ]);
+        break;
+
       default:
       case 'basic':
-        this.devDependencies = this.devDependencies.concat(['babel-preset-env']);
+        this.devDependencies = this.devDependencies.concat([
+          'babel-preset-env'
+        ]);
     }
 
     await installDependencies(this.devDependencies, '--save-dev', this.log);
