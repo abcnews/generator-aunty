@@ -1,6 +1,6 @@
 <template>
   <div class="root">
-    <pre>Error: {{ errorMessage }}</pre>
+    <code>Error: {{ errorMessage }}</code>
   </div>
 </template>
 
