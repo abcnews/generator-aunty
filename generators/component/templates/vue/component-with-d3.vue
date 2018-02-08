@@ -1,5 +1,5 @@
 <template>
-  <div class="svg"></div>
+  <div></div>
 </template>
 
 <script>
@@ -7,16 +7,27 @@ const d3 = require("d3-selection");
 
 export default {
   name: "<%= className %>",
+  props: {
+    data: {
+      default: "red"
+    }
+  },
+  watch: {
+    data(newVal, oldVal) {
+      // TODO: Use D3 to update the graphic like this:
+      this.g.attr("fill", newVal);
+    }
+  },
   mounted() {
-    const svg = d3
-      .select(".svg")
+    this.svg = d3
+      .select(this.$el)
       .append("svg")
       .attr("width", 400)
       .attr("height", 300);
 
-    const g = svg.append("g").attr("fill", "black");
+    this.g = this.svg.append("g").attr("fill", this.data);
 
-    const rect = g
+    this.rect = this.g
       .append("rect")
       .attr("x", 0)
       .attr("y", 0)
