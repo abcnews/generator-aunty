@@ -1,6 +1,6 @@
 import Vue from "vue";
 
-const root = document.querySelector(`[data-vue-webpack-aunty-test-root]`);
+const root = document.querySelector(`[data-<%= projectSlug %>-root]`);
 const PROJECT_NAME = "<%= projectSlug %>";
 
 function init() {
