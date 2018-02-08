@@ -26,7 +26,6 @@ describe("App", () => {
         })
     });
     renderer.renderToString(vm, (err, str) => {
-      console.log(str);
       expect(str).toMatchSnapshot();
     });
   });
