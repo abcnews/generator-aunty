@@ -94,6 +94,9 @@ module.exports = class extends Generator {
     const paths = getAllPaths(commonPath, typePath);
 
     paths.forEach(file => {
+      // Ignore CSS files for Vue
+      if (this.options.template === 'vue' && (file.includes('.css') || file.includes('.scss'))) return;
+
       this.fs.copyTpl(
         file,
         this.destinationPath(
