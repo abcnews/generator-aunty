@@ -48,7 +48,8 @@ module.exports = class extends Generator {
         choices: [
           { name: 'Preact', value: 'preact' },
           { name: 'Basic', value: 'basic' },
-          { name: 'React', value: 'react' }
+          { name: 'React', value: 'react' },
+          { name: 'Vue', value: 'vue' }
         ]
       });
     }
@@ -107,7 +108,7 @@ module.exports = class extends Generator {
   }
 
   async install() {
-    let auntyVersion = '7.0.1';
+    let auntyVersion = '7.6.1';
     try {
       auntyVersion = requireg('@abcnews/aunty/package.json').version;
     } catch (ex) {
@@ -130,6 +131,10 @@ module.exports = class extends Generator {
       case 'react':
         devDependencies = devDependencies.concat(['react-test-renderer', 'babel-preset-env', 'babel-preset-react']);
         dependencies = ['react', 'react-dom'];
+        break;
+      case 'vue':
+        devDependencies = devDependencies.concat(['vue-loader', 'vue-template-compiler', 'vue-server-renderer']);
+        dependencies = ['vue'];
         break;
       case 'basic':
       default:

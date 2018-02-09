@@ -14,7 +14,9 @@ module.exports = class extends Generator {
 
     this.argument('name', { required: false });
 
-    this.option('template', { description: 'Type of project (eg. basic, preact, react)' });
+    this.option('template', {
+      description: 'Type of project (eg. basic, preact, react, vue)'
+    });
     this.option('d3', { description: 'This component will use D3' });
 
     this.dependencies = [];
@@ -59,7 +61,8 @@ module.exports = class extends Generator {
         choices: [
           { name: 'Preact', value: 'preact' },
           { name: 'Basic', value: 'basic' },
-          { name: 'React', value: 'react' }
+          { name: 'React', value: 'react' },
+          { name: 'Vue', value: 'vue' }
         ]
       });
     }
@@ -105,16 +108,24 @@ module.exports = class extends Generator {
       this.dependencies = this.dependencies.concat('d3-selection');
     }
 
-    this.fs.copyTpl(
-      `${templatePath}/${component}.js`,
-      this.destinationPath(`src/components/${this.options.name}.js`),
-      context
-    );
-    this.fs.copyTpl(
-      `${templatePath}/component.scss`,
-      this.destinationPath(`src/components/${this.options.name}.scss`),
-      context
-    );
+    if (this.options.template === 'vue') {
+      this.fs.copyTpl(
+        `${templatePath}/${component}.vue`,
+        this.destinationPath(`src/components/${this.options.name}.vue`),
+        context
+      );
+    } else {
+      this.fs.copyTpl(
+        `${templatePath}/${component}.js`,
+        this.destinationPath(`src/components/${this.options.name}.js`),
+        context
+      );
+      this.fs.copyTpl(
+        `${templatePath}/component.scss`,
+        this.destinationPath(`src/components/${this.options.name}.scss`),
+        context
+      );
+    }
 
     // Copy test over
     this.fs.copyTpl(
@@ -142,6 +153,15 @@ module.exports = class extends Generator {
           'react-test-renderer',
           'babel-preset-react',
           'babel-preset-env'
+        ]);
+        break;
+
+      case 'vue':
+        this.dependencies = this.dependencies.concat(['vue']);
+        this.devDependencies = this.devDependencies.concat([
+          'vue-loader',
+          'vue-template-compiler',
+          'vue-server-renderer'
         ]);
         break;
 
