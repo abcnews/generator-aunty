@@ -15,7 +15,7 @@ module.exports = class extends Generator {
     this.argument('name', { required: false });
 
     this.option('template', {
-      description: 'Type of project (eg. basic, preact, react)'
+      description: 'Type of project (eg. basic, preact, react, vue)'
     });
     this.option('d3', { description: 'This component will use D3' });
 
@@ -130,9 +130,7 @@ module.exports = class extends Generator {
     // Copy test over
     this.fs.copyTpl(
       `${templatePath}/${component}.test.js`,
-      this.destinationPath(
-        `src/components/__tests__/${this.options.name}.test.js`
-      ),
+      this.destinationPath(`src/components/__tests__/${this.options.name}.test.js`),
       context
     );
   }
@@ -140,10 +138,7 @@ module.exports = class extends Generator {
   async install() {
     switch (this.options.template) {
       case 'preact':
-        this.dependencies = this.dependencies.concat([
-          'preact',
-          'preact-compat'
-        ]);
+        this.dependencies = this.dependencies.concat(['preact', 'preact-compat']);
         this.devDependencies = this.devDependencies.concat([
           'html-looks-like',
           'preact-render-to-string',
@@ -172,9 +167,7 @@ module.exports = class extends Generator {
 
       default:
       case 'basic':
-        this.devDependencies = this.devDependencies.concat([
-          'babel-preset-env'
-        ]);
+        this.devDependencies = this.devDependencies.concat(['babel-preset-env']);
     }
 
     await installDependencies(this.devDependencies, '--save-dev', this.log);

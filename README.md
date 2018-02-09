@@ -14,3 +14,4 @@ Generate things for [Aunty](https://www.npmjs.com/package/@abcnews/aunty) projec
 ## Authors
 
 - Nathan Hoad ([hoad.nathan@abc.net.au](mailto:hoad.nathan@abc.net.au))
+- Joshua Byrd ([byrd.joshua@abc.net.au](mailto:byrd.joshua@abc.net.au))
