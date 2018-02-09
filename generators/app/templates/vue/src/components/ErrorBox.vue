@@ -6,16 +6,29 @@
 
 <script>
 export default {
-  name: "App",
-  props: ["errorMessage"],
+  name: 'App',
+  props: ['errorMessage'],
   data() {
     return {};
   }
 };
 </script>
 
-<style src="./ErrorBox.css" lang="css" scoped></style>
-
 <style lang="scss" scoped>
-// Component styles here
+.root {
+  position: fixed;
+  overflow: auto;
+  left: 0;
+  top: 0;
+  z-index: 10000;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 2rem;
+  width: 100vw;
+  height: 100vh;
+  background-color: #900;
+  color: #fff;
+  font-family: Menlo, Consolas, monospace;
+  font-size: large;
+}
 </style>
