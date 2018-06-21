@@ -1,5 +1,4 @@
-const Path = require('path');
-const FS = require('fs-extra');
+const path = require('path');
 const execa = require('execa');
 const ora = require('ora');
 const Chalk = require('chalk');
@@ -12,7 +11,7 @@ const guessRootPath = require('guess-root-path');
  */
 const onlyNewDependencies = (dependencies, isDev) => {
   try {
-    const config = require(Path.join(guessRootPath(), 'package.json'));
+    const config = require(path.join(guessRootPath(), 'package.json'));
     const deps = Object.keys(config[isDev ? 'devDependencies' : 'dependencies']);
     return dependencies.filter(dep => !deps.includes(dep) && dep !== null);
   } catch (ex) {
@@ -41,7 +40,8 @@ const installDependencies = async (dependencies, args, log) => {
       `${args.includes('--save-dev') ? ' development ' : ' '}dependenc${dependencies.length == 1 ? 'y' : 'ies'}`
   );
 
-  args = ['install', '--silent', '--no-progress', '--prefer-local'].concat(dependencies).concat(args);
+  args = ['install', '--silent', '--no-progress'].concat(args).concat(dependencies);
+
   await execa('npm', args);
 
   spinner.stop();

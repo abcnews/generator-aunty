@@ -1,32 +1,22 @@
-import Vue from "vue";
-const App = require("../App.vue");
+import { shallowMount } from '@vue/test-utils';
+import App from '../App.vue';
 
-describe("App", () => {
-  it("should render correct contents", () => {
-    const Constructor = Vue.extend(App);
-    const vm = new Constructor({
+describe('App', () => {
+  it('should render correct contents', () => {
+    const wrapper = shallowMount(App, {
       propsData: {
-        projectName: "test-project"
+        projectName: 'test-project'
       }
-    }).$mount();
-    expect(vm.$el.querySelector(".root h1").textContent).toEqual(
-      "test-project"
-    );
+    });
+    expect(wrapper.find('h1').text()).toContain('test-project');
   });
 
-  it("renders a snapshot", () => {
-    const renderer = require("vue-server-renderer").createRenderer();
-    const vm = new Vue({
-      el: document.createElement("div"),
-      render: h =>
-        h(App, {
-          props: {
-            projectName: "test-project"
-          }
-        })
+  it('renders a snapshot', () => {
+    const wrapper = shallowMount(App, {
+      propsData: {
+        projectName: 'test-project'
+      }
     });
-    renderer.renderToString(vm, (err, str) => {
-      expect(str).toMatchSnapshot();
-    });
+    expect(wrapper.html()).toMatchSnapshot();
   });
 });
