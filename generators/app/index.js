@@ -1,11 +1,10 @@
 const Generator = require('yeoman-generator');
-const FS = require('fs-extra');
-const guessRootPath = require('guess-root-path');
+const fs = require('fs-extra');
 const Chalk = require('chalk');
 const requireg = require('requireg');
 const Path = require('path');
 const getAllPaths = require('get-all-paths');
-const { installDependencies, SPINNER } = require('../../helpers');
+const { installDependencies } = require('../../helpers');
 
 module.exports = class extends Generator {
   constructor(args, opts) {
@@ -46,8 +45,8 @@ module.exports = class extends Generator {
         name: 'template',
         message: 'What type of project is it?',
         choices: [
-          { name: 'Preact', value: 'preact' },
           { name: 'Basic', value: 'basic' },
+          { name: 'Preact', value: 'preact' },
           { name: 'React', value: 'react' },
           { name: 'Vue', value: 'vue' }
         ]
@@ -74,7 +73,7 @@ module.exports = class extends Generator {
   async configuring() {
     const directory = this.options.path;
 
-    await FS.ensureDir(directory);
+    await fs.ensureDir(directory);
     process.chdir(directory);
     this.destinationRoot(directory);
     this.config.set('template', this.options.template);
@@ -84,7 +83,7 @@ module.exports = class extends Generator {
     const context = {
       projectName: this.options.name,
       projectSlug: this.options.projectSlug,
-      projectType: this.options.template + '-app',
+      projectType: this.options.template,
       authorName: this.user.git.name(),
       authorEmail: this.user.git.email()
     };
@@ -111,41 +110,45 @@ module.exports = class extends Generator {
   }
 
   async install() {
-    let auntyVersion = '7.6.1';
+    let auntyVersion;
+
     try {
       auntyVersion = requireg('@abcnews/aunty/package.json').version;
     } catch (ex) {
       // Nothing
     }
 
-    let dependencies = [];
-    let devDependencies = [`@abcnews/aunty@${auntyVersion}`, 'jest'];
+    const devDependencies = [`@abcnews/aunty${auntyVersion ? `@${auntyVersion}` : ''}`, 'jest'];
+    const dependencies = [];
 
     switch (this.options.template) {
       case 'preact':
-        devDependencies = devDependencies.concat([
-          'preact-render-to-string',
-          'html-looks-like',
-          'babel-plugin-transform-react-jsx',
-          'babel-preset-env'
-        ]);
-        dependencies = ['preact', 'preact-compat'];
+        devDependencies.push('html-looks-like', 'preact-render-to-string');
+        dependencies.push('preact', 'preact-compat');
         break;
       case 'react':
-        devDependencies = devDependencies.concat(['react-test-renderer', 'babel-preset-env', 'babel-preset-react']);
-        dependencies = ['react', 'react-dom'];
+        devDependencies.push('react-test-renderer');
+        dependencies.push('react', 'react-dom');
         break;
       case 'vue':
-        devDependencies = devDependencies.concat(['vue-loader', 'vue-template-compiler', 'vue-server-renderer']);
-        dependencies = ['vue'];
+        devDependencies.push('@vue/test-utils');
+        dependencies.push('vue');
         break;
-      case 'basic':
       default:
-        devDependencies = devDependencies.concat(['babel-preset-env']);
+        break;
     }
 
-    await installDependencies(devDependencies, '--save-dev', this.log);
-    await installDependencies(dependencies, '--save', this.log);
+    const allDependencies = [].concat(devDependencies).concat(dependencies);
+    const projectDirectoryName = this.options.path.split('/').reverse()[0];
+
+    if (allDependencies.includes(projectDirectoryName)) {
+      throw new Error(
+        `npm will refuse to install a package ("${projectDirectoryName}") which matches the project directory name.`
+      );
+    }
+
+    await installDependencies(devDependencies.sort(), ['--save-dev'], this.log);
+    await installDependencies(dependencies.sort(), null, this.log);
   }
 
   end() {
