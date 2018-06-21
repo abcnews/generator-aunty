@@ -1,6 +1,6 @@
 {
   "name": "@abcnews/generator-aunty",
-  "version": "2.2.3",
+  "version": "3.0.0",
   "description": "Generate things for Aunty projects",
   "main": "generators/app/index.js",
   "scripts": {
@@ -13,7 +13,10 @@
   "keywords": [
     "yeoman-generator"
   ],
-  "author": "Nathan Hoad",
+  "contributors": [
+    "Nathan Hoad <hoad.nathan@abc.net.au>",
+    "Colin Gourlay <gourlay.colin@abc.net.au>"
+  ],
   "license": "ISC",
   "dependencies": {
     "chalk": "^2.1.0",
